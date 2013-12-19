@@ -65,8 +65,10 @@ def summarize_list(lst, indent, is_toplevel=False):
     type_dict = analyze_types(lst)
 
     ht = get_homogeneous_type(type_dict)
-    if ht:
-        prefix = spaces(indent+1)
+    prefix = spaces(indent+1)
+    if len(lst) == 0:
+        print prefix + 'empty'
+    elif ht:
         if ht == 'dict':
             print prefix + 'dict {'
             summarize_list_of_dicts(lst, indent+1)
@@ -91,10 +93,10 @@ def summarize_list(lst, indent, is_toplevel=False):
     else:
         # test on
         # python summarize_json.py opt-aliasing-golden.trace.json 
-        print spaces(indent+1) + 'heterogeneous list:', pp_type_dict(type_dict)
+        print prefix + 'heterogeneous list:', pp_type_dict(type_dict)
 
     if is_toplevel:
-        print spaces(indent+1) + 'list.length:', len(lst)
+        print prefix + 'list.length:', len(lst)
 
 
 def summarize_list_of_dicts(lst, indent):
